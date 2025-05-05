@@ -10,7 +10,7 @@
        }
    }
 
-   $query = "SELECT * FROM `products`";
+   $query = "SELECT * FROM `products` WHERE `product_status` != 'Sold'";
    $result = mysqli_query($con, $query);
 ?>
 <div id="layoutSidenav_content">
@@ -36,29 +36,42 @@
                   <thead>
                      <tr>
                         <th>#</th>
-                        <th>Product Title</th>
-                        <th>Product Price</th>
-                        <th>Product Description</th>
-                        <th>Product Image</th>
+                        <th>Title</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Image</th>
                         <th>Action</th>
                      </tr>
                   </thead>
-                  <tfoot>
-                     <tr>
-                     <th>#</th>
-                        <th>Product Title</th>
-                        <th>Product Price</th>
-                        <th>Product Description</th>
-                        <th>Product Image</th>
-                        <th>Action</th>
-                     </tr>
-                  </tfoot>
+                  
                   <tbody>
                     <?php foreach($result as $i => $data):?>
                      <tr>
                         <td><?php echo ++$i;?></td>
                         <td><?php echo $data['product_title']?></td>
-                        <td><?php echo $data['product_price']?>/per day</td>
+                        <td><?php echo $data['product_price']?></td>
+                        <td>
+                        <span class="badge fs-6
+                            <?php 
+                                if ($data['product_status'] == 'Active') {
+                                    echo 'bg-success';  // Green for Active
+                                } elseif ($data['product_status'] == 'Processing') {
+                                    echo 'bg-warning';  // Yellow for Processing
+                                } elseif ($data['product_status'] == 'Sold') {
+                                    echo 'bg-success';   // Green for Sold
+
+                                } elseif ($data['product_status'] == 'Out of Stock') {
+                                    echo 'bg-danger';   // Red for Sold Out
+                                } elseif ($data['product_status'] == 'Coming Soon') {
+                                    echo 'bg-warning';  // Yellow for Coming Soon
+                                } elseif ($data['product_status'] == 'Discontinued') {
+                                    echo 'bg-secondary';  // Gray for Discontinued
+                                }
+                            ?>">
+                            <?php echo $data['product_status']; ?>
+                        </span>
+                        </td>
                         <td><?php echo $data['product_desc']?></td>
                         <td><img src="../img/products/<?php echo $data['product_img1']?>" alt="" height="50"></td>
                         <td>

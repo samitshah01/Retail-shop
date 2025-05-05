@@ -15,7 +15,7 @@ include("header.php");
 
         while ($row_slides = mysqli_fetch_array($run_slider)) {
 
-            $slide_name = $row_slides['slide_name']; 
+            $slide_name = $row_slides['slide_name'];
             $slide_image = $row_slides['slide_image'];
             $slide_heading = $row_slides['slide_heading'];
             $slide_text = $row_slides['slide_text'];

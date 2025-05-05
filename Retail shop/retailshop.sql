@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2025 at 08:43 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.0.25
+-- Generation Time: Apr 16, 2025 at 11:54 AM
+-- Server version: 10.11.4-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `retailshop`
+-- Database: `retail_shop`
 --
 
 -- --------------------------------------------------------
@@ -112,15 +112,17 @@ CREATE TABLE `orders` (
   `order_qty` int(10) NOT NULL,
   `order_price` int(10) NOT NULL,
   `c_id` int(10) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` varchar(255) NOT NULL DEFAULT 'Processing'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `order_qty`, `order_price`, `c_id`, `date`) VALUES
-(1, 1, 1300, 32, '2023-05-10 01:49:25');
+INSERT INTO `orders` (`order_id`, `order_qty`, `order_price`, `c_id`, `date`, `status`) VALUES
+(1, 1, 1300, 32, '2023-05-10 01:49:25', 'Processing'),
+(2, 1, 600, 32, '2025-04-16 07:58:18', 'Sold');
 
 -- --------------------------------------------------------
 
@@ -138,20 +140,21 @@ CREATE TABLE `products` (
   `product_img2` text NOT NULL,
   `product_price` int(10) NOT NULL,
   `product_keywords` text NOT NULL,
-  `product_desc` text NOT NULL
+  `product_desc` text NOT NULL,
+  `product_status` varchar(50) DEFAULT 'Live'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`products_id`, `p_cat_id`, `cat_id`, `date`, `product_title`, `product_img1`, `product_img2`, `product_price`, `product_keywords`, `product_desc`) VALUES
-(1, 2, 2, '2025-03-20 07:25:44', 'Smart TV 4K', 'smarttv1.jpg', 'smarttv2.jpg', 600, '4K, Smart TV, electronics', 'A 50-inch 4K Smart TV with Wi-Fi and Bluetooth support'),
-(2, 2, 2, '2025-03-20 07:25:44', 'Bluetooth Headphones', 'headphones1.jpg', 'headphones2.jpg', 90, 'wireless, headphones, Bluetooth', 'Wireless Bluetooth headphones with noise cancellation feature'),
-(3, 3, 3, '2025-03-20 07:25:44', 'Mens Denim Jacket', 'denim_jacket1.jpg', 'denim_jacket2.jpg', 50, 'jacket, denim, mens clothing', 'A stylish mens denim jacket with button closure and front pockets'),
-(4, 3, 3, '2025-03-20 07:25:44', 'Womens Summer Dress', 'summer_dress1.jpg', 'summer_dress2.jpg', 30, 'dress, summer, womens fashion', 'Lightweight and breathable summer dress with floral patterns'),
-(5, 4, 4, '2025-03-20 07:25:44', 'Samsung Galaxy S21', 'galaxy_s21_1.jpg', 'galaxy_s21_2.jpg', 800, 'smartphone, Samsung, Galaxy S21', 'Samsung Galaxy S21 with 5G support and 128GB storage'),
-(6, 4, 4, '2025-03-20 07:25:44', 'iPhone 13 Pro', 'iphone13_1.jpg', 'iphone13_2.jpg', 1000, 'iPhone, smartphone, Apple', 'iPhone 13 Pro with A15 Bionic chip and 256GB storage');
+INSERT INTO `products` (`products_id`, `p_cat_id`, `cat_id`, `date`, `product_title`, `product_img1`, `product_img2`, `product_price`, `product_keywords`, `product_desc`, `product_status`) VALUES
+(1, 2, 4, '2025-04-16 09:35:02', 'Smart TV 4K', 'smarttv1.jpg', 'smarttv2.jpg', 600, '4K, Smart TV, electronics', 'A 50-inch 4K Smart TV with Wi-Fi and Bluetooth support', 'Active'),
+(2, 2, 2, '2025-04-16 08:48:00', 'Bluetooth Headphones', 'headphones1.jpg', 'headphones2.jpg', 90, 'wireless, headphones, Bluetooth', 'Wireless Bluetooth headphones with noise cancellation feature', 'Active'),
+(3, 3, 3, '2025-04-16 08:48:03', 'Mens Denim Jacket', 'denim_jacket1.jpg', 'denim_jacket2.jpg', 50, 'jacket, denim, mens clothing', 'A stylish mens denim jacket with button closure and front pockets', 'Active'),
+(4, 3, 3, '2025-04-16 08:48:05', 'Womens Summer Dress', 'summer_dress1.jpg', 'summer_dress2.jpg', 30, 'dress, summer, womens fashion', 'Lightweight and breathable summer dress with floral patterns', 'Active'),
+(5, 4, 4, '2025-04-16 08:48:07', 'Samsung Galaxy S21', 'galaxy_s21_1.jpg', 'galaxy_s21_2.jpg', 800, 'smartphone, Samsung, Galaxy S21', 'Samsung Galaxy S21 with 5G support and 128GB storage', 'Active'),
+(6, 4, 4, '2025-04-16 08:48:09', 'iPhone 13 Pro', 'iphone13_1.jpg', 'iphone13_2.jpg', 1000, 'iPhone, smartphone, Apple', 'iPhone 13 Pro with A15 Bionic chip and 256GB storage', 'Active');
 
 -- --------------------------------------------------------
 
@@ -171,7 +174,7 @@ CREATE TABLE `product_categories` (
 
 INSERT INTO `product_categories` (`p_cat_id`, `p_cat_title`, `p_cat_desc`) VALUES
 (2, 'TV', 'Good quality custom made and casual wear jackets'),
-(3, 'Jacket', 'Good and easy stuff designed Tee-Shirt '),
+(3, 'Clothes', 'Good and easy stuff designed Tee-Shirt '),
 (4, 'Mobile Phone', 'High Quality Denim and Leather Jeans');
 
 -- --------------------------------------------------------
@@ -276,7 +279,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `order_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`

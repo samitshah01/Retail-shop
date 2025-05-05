@@ -111,6 +111,20 @@
                             <label for="exampleInputEmail1">Product Keywords</label>
                             <input type="text" class="form-control" name="product_keywords" value="<?php echo $data['product_keywords']?>">
                         </div>
+                        
+                        <div class="form-group">
+                        <label for="status">Product Status</label>
+                        <select class="form-control" name="product_status">
+                            <option value="Active" <?php if($data['product_status'] == 'Active') echo 'selected'; ?>>Active</option>
+                            <option value="Processing" <?php if($data['product_status'] == 'Processing') echo 'selected'; ?>>Processing</option>
+                            <option value="Sold" <?php if($data['product_status'] == 'Sold') echo 'selected'; ?>>Processing</option>
+
+                            <option value="Out of Stock" <?php if($data['product_status'] == 'Out of Stock') echo 'selected'; ?>>Out of Stock</option>
+                            <option value="Coming Soon" <?php if($data['product_status'] == 'Coming Soon') echo 'selected'; ?>>Coming Soon</option>
+                            <option value="Discontinued" <?php if($data['product_status'] == 'Discontinued') echo 'selected'; ?>>Discontinued</option>
+                        </select>
+                    </div>
+
                         <div class="form-group">
                             <label for="exampleInputPassword1">Product Description</label>
                             <textarea class="form-control" name="product_desc" cols="19" rows="6"><?php echo strip_tags($data['product_desc'])?></textarea>

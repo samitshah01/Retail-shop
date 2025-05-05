@@ -92,6 +92,17 @@
                             <label for="exampleInputPassword1">Product Description</label>
                             <textarea class="form-control" name="product_desc" cols="19" rows="6"></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="product_status">Product Status</label>
+                            <select class="form-control" name="product_status" required>
+                                <option value="Active">Active</option>
+                                <option value="Processing">Processing</option>
+                                <option value="Sold">Sold</option>
+                                <option value="Out of Stock">Out of Stock</option>
+                                <option value="Coming Soon">Coming Soon</option>
+                                <option value="Discontinued">Discontinued</option>
+                            </select>
+                        </div>
                         <input type="submit" value="Insert Product" name="product_add" class="btn btn-primary mt-2">
                     </form>
 
@@ -102,4 +113,11 @@
          </div>
       </div>
    </main>
+   <script>
+    function disableSubmit(form) {
+        const btn = form.querySelector('#submitBtn');
+        btn.disabled = true;
+        btn.value = 'Submitting...';
+    }
+   </script>
 <?php require_once 'include/footer.php'?>

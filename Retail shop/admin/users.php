@@ -33,33 +33,23 @@
                   <thead>
                      <tr>
                         <th>#</th>
-                        <th>Customer Name</th>
-                        <th>Customer Email</th>
-                        <th>Customer Address</th>
-                        <th>Customer Contact</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Contact</th>
                         <th>Action</th>
                      </tr>
                   </thead>
-                  <tfoot>
-                     <tr>
-                        <th>#</th>
-                        <th>Customer Name</th>
-                        <th>Customer Email</th>
-                        <th>Customer Address</th>
-                        <th>Customer Contact</th>
-                        <th>Action</th>
-                     </tr>
-                  </tfoot>
                   <tbody>
                     <?php foreach($result as $i => $data):?>
                      <tr>
                         <td><?php echo ++$i;?></td>
                         <td><?php echo $data['customer_name']?></td>
-                        <td><?php echo $data['customer_email']?>/per day</td>
+                        <td><?php echo $data['customer_email']?></td>
                         <td><?php echo $data['customer_address']?></td>
                         <td><?php echo $data['customer_contact']?></td>
                         <td>
-                            <a href="javascript:delete_id(<?php echo $data['customer_id']; ?>)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                           <a href="javascript:delete_id(<?php echo $data['customer_id']; ?>)" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                         </td>
                      </tr>
                      <?php endforeach?>

@@ -60,28 +60,38 @@ require_once '../../db.php';
         }
     }
 
-    
-
-    if(isset($_POST['login'])){
-        $email = $_POST['email'];
+    if (isset($_POST['login'])) {
+        $email = trim($_POST['email']);
         $password = $_POST['password'];
+    
+        // Prepare SQL statement
+        $stmt = $con->prepare("SELECT admin_id, admin_name, admin_email, password FROM admin WHERE admin_email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+    
+        $result = $stmt->get_result();
+    
+        if ($result && $result->num_rows === 1) {
+            $data = $result->fetch_assoc();
 
-        $query = "SELECT * FROM admin WHERE admin_email = '$email' AND password = '$password'";
-
-        $result = mysqli_query($con, $query);
-
-        if(mysqli_num_rows($result) > 0){
-            $data = mysqli_fetch_assoc($result);
-            $_SESSION['admin_id'] = $data['admin_id'];
-            $_SESSION['admin_email'] = $data['email'];
-            header('location:../index.php');
-        }
-        else{
-            $_SESSION['error'] = "Username or password invalid !!";
-            header('location:../login.php');
-
+            if (password_verify($password, $data['password'])) {
+                $_SESSION['admin_id'] = $data['admin_id'];
+                $_SESSION['admin_email'] = $data['admin_email'];
+                $_SESSION['admin_name'] = $data['admin_name'];
+                header('Location: ../index.php');
+                exit;
+            } else {
+                $_SESSION['error'] = "Username or password invalid!";
+                header('Location: ../login.php');
+                exit;
+            }
+        } else {
+            $_SESSION['error'] = "Username or password invalid!";
+            header('Location: ../login.php');
+            exit;
         }
     }
+
     if(isset($_POST['find'])){
 		$email = $_POST['email'];
 
